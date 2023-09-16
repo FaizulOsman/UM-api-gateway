@@ -20,6 +20,15 @@ const getAllFromDB = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+const updateOneIntoDB = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await AcademicSemesterService.updateOneIntoDB(req);
+    sendResponse(res, result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getByIdFromDB = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await AcademicSemesterService.getByIdFromDB(req);
@@ -32,5 +41,6 @@ const getByIdFromDB = async (req: Request, res: Response, next: NextFunction) =>
 export const AcademicSemesterController = {
   insertIntoDB,
   getAllFromDB,
-  getByIdFromDB
+  getByIdFromDB,
+  updateOneIntoDB
 };
