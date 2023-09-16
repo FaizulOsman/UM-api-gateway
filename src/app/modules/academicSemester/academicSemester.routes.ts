@@ -24,4 +24,10 @@ router.patch(
   AcademicSemesterController.updateOneIntoDB
 );
 
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  AcademicSemesterController.deleteByIdFromDB
+);
+
 export const academicSemesterRoutes = router;
