@@ -26,6 +26,30 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await AuthenticationService.refreshToken(req);
+
+    const { refreshToken, ...others } = result.data;
+
+    const cookieOptions = {
+      secure: config.env === 'production',
+      httpOnly: true
+    };
+
+    res.cookie('refreshToken', result.data.refreshToken, cookieOptions);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'New Refresh token generated!',
+      data: others
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const AuthenticationController = {
-  loginUser
+  loginUser,
+  refreshToken
 };
